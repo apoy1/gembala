@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StrukCuan - Foto Struk Jadi Saldo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #F5C842;
+      --gold-dark: #D4A800;
+      --bg: #0A0A0F;
+      --bg2: #111118;
+      --card: #16161F;
+      --text: #F0EEE8;
+      --muted: #8A8A9A;
+      --green: #2ECC71;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 24px;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(245,200,66,0.1);
+    }
+    .nav-logo {
+      font-family: 'Sora', sans-serif;
+      font-weight: 800; font-size: 20px;
+      color: var(--gold);
+      letter-spacing: -0.5px;
+    }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 14px; font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 100px 24px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(245,200,66,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(245,200,66,0.1);
+      border: 1px solid rgba(245,200,66,0.3);
+      border-radius: 99px;
+      padding: 6px 16px;
+      font-size: 13px; font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 28px;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-badge span { width: 8px; height: 8px; border-radius: 50%; background: var(--green); display: inline-block; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    .hero h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(36px, 8vw, 64px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -2px;
+      margin-bottom: 20px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+    .hero p {
+      font-size: clamp(15px, 2.5vw, 18px);
+      color: var(--muted);
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 36px;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--gold);
+      color: #000;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700; font-size: 15px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: fadeUp 0.6s 0.3s ease both;
+      box-shadow: 0 0 30px rgba(245,200,66,0.25);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 40px rgba(245,200,66,0.4);
+    }
+    .hero-img {
+      margin-top: 56px;
+      width: 220px;
+      border-radius: 28px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06);
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform: translateY(24px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+    /* STEPS */
+    .section {
+      padding: 80px 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .section-label {
+      text-align: center;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      text-align: center;
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(26px, 5vw, 38px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 48px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .step-card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      padding: 28px 24px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .step-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(245,200,66,0.3);
+    }
+    .step-num {
+      font-family: 'Sora', sans-serif;
+      font-size: 48px; font-weight: 800;
+      color: rgba(245,200,66,0.12);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .step-card h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 17px; font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .step-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* FEATURES */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .feat {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 24px 20px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .feat:hover { border-color: rgba(245,200,66,0.25); transform: translateY(-3px); }
+    .feat-icon { font-size: 28px; margin-bottom: 12px; }
+    .feat h4 { font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .feat p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* CTA */
+    .cta {
+      margin: 0 24px 80px;
+      background: linear-gradient(135deg, rgba(245,200,66,0.15), rgba(245,200,66,0.05));
+      border: 1px solid rgba(245,200,66,0.2);
+      border-radius: 28px;
+      padding: 60px 24px;
+      text-align: center;
+      max-width: 860px;
+      margin-left: auto; margin-right: auto;
+      margin-bottom: 80px;
+    }
+    .cta h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .cta p { color: var(--muted); margin-bottom: 32px; font-size: 15px; }
+    .play-btn {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: #000;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      padding: 12px 20px;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .play-btn:hover { border-color: var(--gold); transform: scale(1.03); }
+    .play-btn img { width: 28px; }
+    .play-btn-text { text-align: left; }
+    .play-btn-text small { display: block; font-size: 10px; color: var(--muted); }
+    .play-btn-text strong { font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 700; }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    footer span { color: var(--gold); font-weight: 600; }
+
+    @media (max-width: 480px) {
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">StrukCuan</div>
+    <div class="nav-links">
+      <a href="#hero">Beranda</a>
+      <a href="#cara">Cara Kerja</a>
+      <a href="#fitur">Fitur</a>
+      <a href="#unduh">Unduh</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-badge"><span></span> Aplikasi Lokal Terpercaya</div>
+    <h1>Foto Struk,<br><em>Jadi Saldo!</em></h1>
+    <p>Kumpulkan struk belanja apa saja — minimarket, restoran, hingga parkir — dan tukarkan menjadi saldo DANA.</p>
+    <a href="https://play.google.com/store/apps/details?id=struk.cuan" class="btn-primary">
+      ▶ Download Gratis
+    </a>
+    <img src="https://i.ibb.co.com/933YDCwj/1769042075-picsay.jpg" alt="StrukCuan App" class="hero-img" onerror="this.style.display='none'" />
+  </section>
+
+  <!-- CARA KERJA -->
+  <section class="section" id="cara">
+    <div class="section-label">Cara Kerja</div>
+    <h2 class="section-title">3 Langkah Mudah</h2>
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <h3>Dapatkan Struk</h3>
+        <p>Simpan struk belanjaan fisik Anda dari mana saja — minimarket, restoran, atau parkir.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <h3>Foto & Scan</h3>
+        <p>Buka aplikasi StrukCuan, arahkan kamera ke struk, dan biarkan AI membaca otomatis.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <h3>Cairkan Saldo</h3>
+        <p>Poin masuk otomatis, tukar ke saldo Rupiah dan withdraw ke DANA kapan saja.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FITUR -->
+  <section class="section" id="fitur">
+    <div class="section-label">Fitur</div>
+    <h2 class="section-title">Semua Ada di Sini</h2>
+    <div class="features-grid">
+      <div class="feat">
+        <div class="feat-icon">📷</div>
+        <h4>Scan Struk</h4>
+        <p>Teknologi OCR membaca struk secara otomatis, akurat dan cepat.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🎰</div>
+        <h4>Spin & Menang</h4>
+        <p>Putar roda keberuntungan setiap hari untuk bonus poin ekstra.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">📅</div>
+        <h4>Daily Check-in</h4>
+        <p>Login setiap hari dan kumpulkan streak untuk reward semakin besar.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">📺</div>
+        <h4>Tonton Iklan</h4>
+        <p>Tonton video pendek dan dapatkan poin bonus hingga 10x sehari.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">💸</div>
+        <h4>Withdraw ke DANA</h4>
+        <p>Cairkan saldo ke DANA mulai dari Rp 100, bebas kapan saja.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">🔒</div>
+        <h4>Aman & Terpercaya</h4>
+        <p>Login dengan Google, data terenkripsi, didukung Firebase.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="unduh">
+    <h2>Mulai Kumpulkan Cuan<br>Sekarang! 🎉</h2>
+    <p>Gratis. Tanpa syarat. Download dan langsung pakai.</p>
+    <a href="https://play.google.com/store/apps/details?id=struk.cuan" class="play-btn">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Google_Play_Arrow_logo.svg" alt="Play Store" />
+      <div class="play-btn-text">
+        <small>Dapatkan di</small>
+        <strong>Google Play</strong>
+      </div>
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>StrukCuan</span> &copy; 2025 — Foto Struk Jadi Saldo
+  </footer>
+
+</body>
+</html>
